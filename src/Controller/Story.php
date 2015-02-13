@@ -11,11 +11,6 @@ class Story {
      */
     protected $storyModel;
 
-    /**
-     * @var array
-     */
-    protected $config;
-
     public function __construct(StoryModel $story, Comment $comment)
     {
         $this->storyModel = $story;
@@ -79,7 +74,7 @@ class Story {
                 $error = 'You did not fill in all the fields or the URL did not validate.';       
             } else {
                 $id = $this->storyModel->createNewStory($_POST['headline'], $_POST['url'], $_SESSION['username']);
-                header("Location: /story/?id=$id");
+                header("Location: /story?id=$id");
                 exit;
             }
         }

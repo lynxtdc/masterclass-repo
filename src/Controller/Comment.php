@@ -10,9 +10,9 @@ class Comment {
      */
     protected $commentModel;
 
-    public function __construct(CommentModel $commentModel)
+    public function __construct(CommentModel $comment)
     {
-        $this->commentModel = $commentModel;
+        $this->commentModel = $comment;
     }
 
     
@@ -24,8 +24,7 @@ class Comment {
         }
 
         $this->commentModel->postNewComment($_SESSION['username'], $_POST['story_id'], $_POST['comment']);
-
-        header("Location: /story/?id=" . $_POST['story_id']);
+        header("Location: /story?id=" . $_POST['story_id']);
     }
     
 }
