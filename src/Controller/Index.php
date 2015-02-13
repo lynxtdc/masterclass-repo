@@ -11,9 +11,9 @@ class Index {
      */
     protected $story;
 
-    public function __construct(array $config)
+    public function __construct(Story $story)
     {
-        $this->story = new Story($config);
+        $this->story = $story;
     }
 
     public function index() {
