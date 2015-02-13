@@ -1,9 +1,9 @@
 <?php
 
-//$path = realpath(__DIR__ .'/..');
+$path = realpath(__DIR__ .'/..');
 return array(
 
-    //'path' => $path,
+    'path' => $path,
 
     'database' => array(
         'user' => 'homestead',
@@ -25,5 +25,22 @@ return array(
         '/user/login/check' => ['class' => 'Masterclass\Controller\User:login', 'type' => 'POST'],
         '/user/login' => ['class' => 'Masterclass\Controller\User:login', 'type' => 'GET'],
         '/user/logout' => ['class' => 'Masterclass\Controller\User:logout', 'type' => 'GET'],
+    ),
+
+    'layouts' => array(
+        ['layout', $path.'/views/layout.php']
+    ),
+
+    'views' => array(
+        'index' => '/views/index.php',
+        'story' => '/views/story.php',
+        'story_create' => '/views/story_create.php'
+    ),
+
+    'config_classes' => array(
+        'Masterclass\Configuration\DiConfig',
+        'Masterclass\Configuration\RouterConfig',
+        'Masterclass\Configuration\View',
+        'Masterclass\Configuration\Web'
     ),
 );
