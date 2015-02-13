@@ -10,9 +10,9 @@ class User {
      */
     protected $userModel;
 
-    public function __construct($config)
+    public function __construct(UserModel $userModel)
     {
-        $this->userModel = new UserModel($config);
+        $this->userModel = $userModel;
     }
     
     public function create() {
