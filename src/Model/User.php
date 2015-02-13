@@ -2,17 +2,16 @@
 
 namespace Masterclass\Model;
 
-use PDO;
+use Masterclass\Dbal\AbstractDb;
 
 class User
 {
     /**
-     * @var PDO
+     * @var AbstractDb
      */
     protected $db;
-    public function __construct(PDO $pdo) {
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $this->db = $pdo;
+    public function __construct(AbstractDb $db) {
+        $this->db = $db;
     }
 
     /**
@@ -22,9 +21,7 @@ class User
     public function checkUsername($username)
     {
         $check_sql = 'SELECT * FROM user WHERE username = ?';
-        $check_stmt = $this->db->prepare($check_sql);
-        $check_stmt->execute(array($username));
-        return $check_stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $this->db->fetchAll($check_sql, [$username]);
     }
 
     /**
@@ -36,8 +33,7 @@ class User
     public function createUser($username, $email, $password)
     {
         $sql = 'INSERT INTO user (username, email, password) VALUES (?, ?, ?)';
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute(array(
+        $this->db->execute($sql, array(
             $username,
             $email,
             md5($username . $password)
@@ -54,29 +50,26 @@ class User
     public function updatePassword($username, $password)
     {
         $sql = 'UPDATE user SET password = ? WHERE username = ?';
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute(array(
-            md5($username . $password), // THIS IS NOT SECURE.
+        // THIS IS NOT SECURE.
+        $this->db->execute($sql, array(
+            md5($username . $password),
             $username,
         ));
+        // THIS IS NOT SECURE.
         return true;
     }
 
     public function getUserInfo($username)
     {
         $dsql = 'SELECT * FROM user WHERE username = ?';
-        $stmt = $this->db->prepare($dsql);
-        $stmt->execute(array($username));
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        return $this->db->fetchOne($dsql, [$username]);
     }
 
     public function validateUser($username, $password)
     {
         $password = md5($username . $password); // THIS IS NOT SECURE. DO NOT USE IN PRODUCTION.
         $sql = 'SELECT * FROM user WHERE username = ? AND password = ? LIMIT 1';
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute(array($username, $password));
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        return $this->db->fetchOne($sql, [$username, $password]);
     }
 
 }
