@@ -35,8 +35,10 @@ class MasterController {
 
         $calling = $match->getRouteClass();
         list($class, $method) = explode(':', $calling);
+
         $o = $this->container->newInstance($class);
         $response = $o->$method();
+
         if ($response instanceof Response){
             $this->sendResponse($response);
         }
@@ -44,7 +46,7 @@ class MasterController {
 
     public function sendResponse(Response $response)
     {
-        header ($response->status->get(), ture, $response->status->getCode());
+        header ($response->status->get(), true, $response->status->getCode());
 
         //send non-cookie headers
         foreach ($response->headers->get() as $label => $value){

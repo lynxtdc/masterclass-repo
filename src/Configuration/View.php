@@ -12,8 +12,8 @@ class View extends Config
         $config = $di->get('config');
 
         $di->params['Aura\View\View'] = array(
-            'view-registry' => $di->lazyNew('Aura\View\TemplateRegistry', ['map' => $config['views']]),
-            'layout-registry' => $di->lazyNew('Aura\View\TemplateRegistry', ['map' => $config['layouts']]),
+            'view_registry' => $di->lazyNew('Aura\View\TemplateRegistry', ['map' => $config['views']]),
+            'layout_registry' => $di->lazyNew('Aura\View\TemplateRegistry', ['map' => $config['layouts']]),
             'helpers' => $di->lazyNew('Aura\View\HelperRegistry'),
         );
     }

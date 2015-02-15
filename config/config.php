@@ -1,6 +1,7 @@
 <?php
 
 $path = realpath(__DIR__ .'/..');
+
 return array(
 
     'path' => $path,
@@ -27,15 +28,15 @@ return array(
         '/user/logout' => ['class' => 'Masterclass\Controller\User:logout', 'type' => 'GET'],
     ),
 
-    'layouts' => array(
-        ['layout', $path.'/views/layout.php']
-    ),
+    'layouts' => [
+        'layout' => $path. '/views/layout.php',
+    ],
 
-    'views' => array(
-        'index' => '/views/index.php',
-        'story' => '/views/story.php',
-        'story_create' => '/views/story_create.php'
-    ),
+    'views' => [
+        'index' => $path . '/views/index.php',
+        'story' => $path . '/views/story.php',
+        'story_create' => $path . '/views/story_create.php'
+    ],
 
     'config_classes' => array(
         'Masterclass\Configuration\DiConfig',
