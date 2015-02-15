@@ -10,7 +10,9 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "aura/di": "~2.1"
+        "aura/di": "~2.1",
+        "aura/web": "~2.0",
+        "aura/view": "~2.0.1"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.4"

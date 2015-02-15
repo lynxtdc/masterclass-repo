@@ -3,6 +3,9 @@
 namespace Masterclass\Controller;
 
 use Masterclass\Model\Story;
+use Aura\Web\Request;
+use Aura\Web\Response;
+use Aura\View\View;
 
 class Index {
 
@@ -12,35 +15,39 @@ class Index {
     protected $model;
 
     /**
-     * @var array
+     * @var Request
      */
-    protected $config;
+    protected $request;
 
-    public function __construct(Story $story)
+    /**
+     * @var Response
+     */
+    protected $response;
+
+    /**
+     * @var View
+     */
+    protected $template;
+
+
+    public function __construct(Story $story, Request $request,Response $response, View $view)
     {
         $this->model = $story;
+        $this->response = $response;
+        $this->template = $view;
     }
 
     public function index() {
         
         $stories = $this->model->getStories();
-        
-        $content = '<ol>';
-        
-        foreach($stories as $story) {
 
-            $content .= '
-                <li>
-                <a class="headline" href="' . $story['url'] . '">' . $story['headline'] . '</a><br />
-                <span class="details">' . $story['created_by'] . ' | <a href="/story?id=' . $story['id'] . '">' . $story['count'] . ' Comments</a> |
-                ' . date('n/j/Y g:i a', strtotime($story['created_on'])) . '</span>
-                </li>
-            ';
-        }
-        
-        $content .= '</ol>';
-        
-        require '../layout.phtml';
+        $this->template->setLayout('layout');
+        $this->template->setView('index');
+
+        $this->template->setData(['stories' => $stories]);
+        $this->response->content->set($this->template->__invoke());
+        return $this->response;
+
     }
 }
 
